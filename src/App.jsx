@@ -9,8 +9,17 @@ function App() {
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
   const [search, setSearch] = useState('')
+  const [showSplash, setShowSplash] = useState(true)
 
   const currentSong = songs[currentIndex]
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false)
+    }, 3000)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   const filteredSongs = songs.filter(song =>
     song.title.toLowerCase().includes(search.toLowerCase())
@@ -57,10 +66,23 @@ function App() {
   }
 
   useEffect(() => {
-    if (isPlaying) {
+    if (isPlaying && audioRef.current) {
       audioRef.current.play()
     }
   }, [currentIndex, isPlaying])
+
+  if (showSplash) {
+    return (
+      <section className="splash">
+        <div className="splash-content">
+          <img src="/one-sound-emotion/cover.jpg" alt="Ondas e Emoções 2026" />
+          <h1>Ondas e Emoções</h1>
+          <p>2026</p>
+          <span>Sinta cada onda. Viva cada emoção.</span>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <main className="app">
