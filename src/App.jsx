@@ -1,123 +1,144 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { songs } from './songs'
 
 function App() {
   const audioRef = useRef(null)
 
-  const [currentSong, setCurrentSong] = useState(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const [search, setSearch] = useState('')
 
-  const playSong = (song) => {
-    if (currentSong?.url !== song.url) {
-      setCurrentSong(song)
+  const currentSong = songs[currentIndex]
 
-      setTimeout(() => {
-        audioRef.current.play()
-        setIsPlaying(true)
-      }, 100)
+  const filteredSongs = songs.filter(song =>
+    song.title.toLowerCase().includes(search.toLowerCase())
+  )
+
+  function playSong(index) {
+    setCurrentIndex(index)
+    setIsPlaying(true)
+  }
+
+  function togglePlay() {
+    if (!audioRef.current) return
+
+    if (isPlaying) {
+      audioRef.current.pause()
+      setIsPlaying(false)
     } else {
-      if (isPlaying) {
-        audioRef.current.pause()
-        setIsPlaying(false)
-      } else {
-        audioRef.current.play()
-        setIsPlaying(true)
-      }
+      audioRef.current.play()
+      setIsPlaying(true)
     }
   }
 
+  function nextSong() {
+    setCurrentIndex((prev) => (prev + 1) % songs.length)
+    setIsPlaying(true)
+  }
+
+  function prevSong() {
+    setCurrentIndex((prev) => (prev - 1 + songs.length) % songs.length)
+    setIsPlaying(true)
+  }
+
+  function formatTime(time) {
+    if (!time) return '0:00'
+    const minutes = Math.floor(time / 60)
+    const seconds = Math.floor(time % 60).toString().padStart(2, '0')
+    return `${minutes}:${seconds}`
+  }
+
+  function handleProgress(e) {
+    const value = e.target.value
+    audioRef.current.currentTime = value
+    setProgress(value)
+  }
+
+  useEffect(() => {
+    if (isPlaying) {
+      audioRef.current.play()
+    }
+  }, [currentIndex, isPlaying])
+
   return (
-    <main style={styles.container}>
-      <h1 style={styles.title}>One Sound Emotion</h1>
+    <main className="app">
+      <section className="hero">
+        <div>
+          <p className="small">Sua plataforma musical</p>
+          <h1>One Sound Emotion</h1>
+          <p className="subtitle">Ouça suas músicas online, grátis e direto do seu próprio app.</p>
+        </div>
+      </section>
 
-      <div style={styles.grid}>
-        {songs.map((song, index) => (
-          <div key={index} style={styles.card}>
-            <img
-              src={song.cover}
-              alt={song.title}
-              style={styles.image}
-            />
+      <input
+        className="search"
+        type="text"
+        placeholder="Buscar música..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
-            <h2>{song.title}</h2>
+      <section className="songs-grid">
+        {filteredSongs.map((song) => {
+          const realIndex = songs.findIndex(s => s.url === song.url)
 
-            <p>{song.artist}</p>
-
+          return (
             <button
-              style={styles.button}
-              onClick={() => playSong(song)}
+              className={`song-card ${currentSong.url === song.url ? 'active' : ''}`}
+              key={song.url}
+              onClick={() => playSong(realIndex)}
             >
-              {currentSong?.url === song.url && isPlaying
-                ? 'Pausar'
-                : 'Tocar'}
+              <img src={song.cover} alt={song.title} />
+              <h2>{song.title}</h2>
+              <p>{song.artist}</p>
             </button>
-          </div>
-        ))}
-      </div>
+          )
+        })}
+      </section>
 
-      {currentSong && (
+      <section className="player">
+        <div className="player-info">
+          <img src={currentSong.cover} alt={currentSong.title} />
+          <div>
+            <h3>{currentSong.title}</h3>
+            <p>{currentSong.artist}</p>
+          </div>
+        </div>
+
+        <div className="controls">
+          <div className="buttons">
+            <button onClick={prevSong}>⏮</button>
+            <button className="play" onClick={togglePlay}>
+              {isPlaying ? '⏸' : '▶'}
+            </button>
+            <button onClick={nextSong}>⏭</button>
+          </div>
+
+          <div className="progress-area">
+            <span>{formatTime(progress)}</span>
+            <input
+              type="range"
+              min="0"
+              max={duration || 0}
+              value={progress}
+              onChange={handleProgress}
+            />
+            <span>{formatTime(duration)}</span>
+          </div>
+        </div>
+
         <audio
           ref={audioRef}
           src={currentSong.url}
-          onEnded={() => setIsPlaying(false)}
-          controls
-          autoPlay
-          style={styles.player}
+          onLoadedMetadata={() => setDuration(audioRef.current.duration)}
+          onTimeUpdate={() => setProgress(audioRef.current.currentTime)}
+          onEnded={nextSong}
         />
-      )}
+      </section>
     </main>
   )
-}
-
-const styles = {
-  container: {
-    padding: '30px',
-    minHeight: '100vh',
-    background: '#121212',
-    color: '#fff',
-  },
-
-  title: {
-    textAlign: 'center',
-    marginBottom: '40px',
-  },
-
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '20px',
-  },
-
-  card: {
-    background: '#1f1f1f',
-    borderRadius: '16px',
-    padding: '20px',
-    textAlign: 'center',
-  },
-
-  image: {
-    width: '100%',
-    borderRadius: '12px',
-    marginBottom: '15px',
-  },
-
-  button: {
-    border: 'none',
-    padding: '12px 20px',
-    borderRadius: '10px',
-    background: '#00b894',
-    color: '#fff',
-    fontSize: '16px',
-  },
-
-  player: {
-    position: 'fixed',
-    bottom: '20px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '90%',
-    maxWidth: '500px',
-  },
 }
 
 export default App
