@@ -10,14 +10,12 @@ function App() {
   const [duration, setDuration] = useState(0)
   const [search, setSearch] = useState('')
   const [showSplash, setShowSplash] = useState(true)
+  const [showNowPlaying, setShowNowPlaying] = useState(false)
 
   const currentSong = songs[currentIndex]
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplash(false)
-    }, 3000)
-
+    const timer = setTimeout(() => setShowSplash(false), 3000)
     return () => clearTimeout(timer)
   }, [])
 
@@ -28,6 +26,7 @@ function App() {
   function playSong(index) {
     setCurrentIndex(index)
     setIsPlaying(true)
+    setShowNowPlaying(true)
   }
 
   function togglePlay() {
@@ -120,8 +119,56 @@ function App() {
         })}
       </section>
 
+      {showNowPlaying && (
+        <section className="now-playing">
+          <button className="close-now" onClick={() => setShowNowPlaying(false)}>
+            ↓
+          </button>
+
+          <div className="now-bg">
+            <img src={currentSong.cover} alt="" />
+          </div>
+
+          <div className="now-content">
+            <p className="now-label">Tocando agora</p>
+
+            <img
+              className={`now-cover ${isPlaying ? 'rotating' : ''}`}
+              src={currentSong.cover}
+              alt={currentSong.title}
+            />
+
+            <h1>{currentSong.title}</h1>
+            <p>{currentSong.artist}</p>
+
+            <div className="now-progress">
+              <div>
+                <span>{formatTime(progress)}</span>
+                <span>{formatTime(duration)}</span>
+              </div>
+
+              <input
+                type="range"
+                min="0"
+                max={duration || 0}
+                value={progress}
+                onChange={handleProgress}
+              />
+            </div>
+
+            <div className="now-buttons">
+              <button onClick={prevSong}>⏮</button>
+              <button className="now-play" onClick={togglePlay}>
+                {isPlaying ? '⏸' : '▶'}
+              </button>
+              <button onClick={nextSong}>⏭</button>
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="player">
-        <div className="player-info">
+        <div className="player-info" onClick={() => setShowNowPlaying(true)}>
           <img src={currentSong.cover} alt={currentSong.title} />
           <div>
             <h3>{currentSong.title}</h3>
