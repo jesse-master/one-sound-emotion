@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { songs } from './songs'
+import WavesBackground from './components/WavesBackground'
 
 function App() {
   const audioRef = useRef(null)
@@ -84,69 +85,112 @@ function App() {
   }
 
   return (
-    <main className="app">
-      <section className="hero">
-        <div>
-          <p className="small">Sua plataforma musical</p>
-          <h1>One Sound Emotion</h1>
-          <p className="subtitle">Ouça suas músicas online, grátis e direto do seu próprio app.</p>
-        </div>
-      </section>
+    <>
+      <WavesBackground />
 
-      <input
-        className="search"
-        type="text"
-        placeholder="Buscar música..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-
-      <section className="songs-grid">
-        {filteredSongs.map((song) => {
-          const realIndex = songs.findIndex(s => s.url === song.url)
-
-          return (
-            <button
-              className={`song-card ${currentSong.url === song.url ? 'active' : ''}`}
-              key={song.url}
-              onClick={() => playSong(realIndex)}
-            >
-              <img src={song.cover} alt={song.title} />
-              <h2>{song.title}</h2>
-              <p>{song.artist}</p>
-            </button>
-          )
-        })}
-      </section>
-
-      {showNowPlaying && (
-        <section className="now-playing">
-          <button className="close-now" onClick={() => setShowNowPlaying(false)}>
-            ↓
-          </button>
-
-          <div className="now-bg">
-            <img src={currentSong.cover} alt="" />
+      <main className="app">
+        <section className="hero">
+          <div>
+            <p className="small">Sua plataforma musical</p>
+            <h1>One Sound Emotion</h1>
+            <p className="subtitle">Ouça suas músicas online, grátis e direto do seu próprio app.</p>
           </div>
+        </section>
 
-          <div className="now-content">
-            <p className="now-label">Tocando agora</p>
+        <input
+          className="search"
+          type="text"
+          placeholder="Buscar música..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
-            <img
-              className={`now-cover ${isPlaying ? 'rotating' : ''}`}
-              src={currentSong.cover}
-              alt={currentSong.title}
-            />
+        <section className="songs-grid">
+          {filteredSongs.map((song) => {
+            const realIndex = songs.findIndex(s => s.url === song.url)
 
-            <h1>{currentSong.title}</h1>
-            <p>{currentSong.artist}</p>
+            return (
+              <button
+                className={`song-card ${currentSong.url === song.url ? 'active' : ''}`}
+                key={song.url}
+                onClick={() => playSong(realIndex)}
+              >
+                <img src={song.cover} alt={song.title} />
+                <h2>{song.title}</h2>
+                <p>{song.artist}</p>
+              </button>
+            )
+          })}
+        </section>
 
-            <div className="now-progress">
-              <div>
-                <span>{formatTime(progress)}</span>
-                <span>{formatTime(duration)}</span>
+        {showNowPlaying && (
+          <section className="now-playing">
+            <button className="close-now" onClick={() => setShowNowPlaying(false)}>
+              ↓
+            </button>
+
+            <div className="now-bg">
+              <img src={currentSong.cover} alt="" />
+            </div>
+
+            <div className="now-content">
+              <p className="now-label">Tocando agora</p>
+
+              <img
+                className={`now-cover ${isPlaying ? 'rotating' : ''}`}
+                src={currentSong.cover}
+                alt={currentSong.title}
+              />
+
+              <h1>{currentSong.title}</h1>
+              <p>{currentSong.artist}</p>
+
+              <div className="now-progress">
+                <div>
+                  <span>{formatTime(progress)}</span>
+                  <span>{formatTime(duration)}</span>
+                </div>
+
+                <input
+                  type="range"
+                  min="0"
+                  max={duration || 0}
+                  value={progress}
+                  onChange={handleProgress}
+                />
               </div>
 
+              <div className="now-buttons">
+                <button onClick={prevSong}>⏮</button>
+                <button className="now-play" onClick={togglePlay}>
+                  {isPlaying ? '⏸' : '▶'}
+                </button>
+                <button onClick={nextSong}>⏭</button>
+              </div>
+            </div>
+          </section>
+        )}
+
+        <section className="player">
+          <div className="player-info" onClick={() => setShowNowPlaying(true)}>
+            <img src={currentSong.cover} alt={currentSong.title} />
+            <div>
+              <h3>{currentSong.title}</h3>
+              <p>{currentSong.artist}</p>
+            </div>
+          </div>
+
+          <div className="controls">
+            <div className="buttons">
+              <button onClick={prevSong}>⏮</button>
+              <button className="play" onClick={togglePlay}>
+                {isPlaying ? '⏸' : '▶'}
+              </button>
+              <button onClick={nextSong}>⏭</button>
+            </div>
+
+            <div className="progress-area">
+              <span>{formatTime(progress)}</span>
               <input
                 type="range"
                 min="0"
@@ -154,59 +198,20 @@ function App() {
                 value={progress}
                 onChange={handleProgress}
               />
-            </div>
-
-            <div className="now-buttons">
-              <button onClick={prevSong}>⏮</button>
-              <button className="now-play" onClick={togglePlay}>
-                {isPlaying ? '⏸' : '▶'}
-              </button>
-              <button onClick={nextSong}>⏭</button>
+              <span>{formatTime(duration)}</span>
             </div>
           </div>
+
+          <audio
+            ref={audioRef}
+            src={currentSong.url}
+            onLoadedMetadata={() => setDuration(audioRef.current.duration)}
+            onTimeUpdate={() => setProgress(audioRef.current.currentTime)}
+            onEnded={nextSong}
+          />
         </section>
-      )}
-
-      <section className="player">
-        <div className="player-info" onClick={() => setShowNowPlaying(true)}>
-          <img src={currentSong.cover} alt={currentSong.title} />
-          <div>
-            <h3>{currentSong.title}</h3>
-            <p>{currentSong.artist}</p>
-          </div>
-        </div>
-
-        <div className="controls">
-          <div className="buttons">
-            <button onClick={prevSong}>⏮</button>
-            <button className="play" onClick={togglePlay}>
-              {isPlaying ? '⏸' : '▶'}
-            </button>
-            <button onClick={nextSong}>⏭</button>
-          </div>
-
-          <div className="progress-area">
-            <span>{formatTime(progress)}</span>
-            <input
-              type="range"
-              min="0"
-              max={duration || 0}
-              value={progress}
-              onChange={handleProgress}
-            />
-            <span>{formatTime(duration)}</span>
-          </div>
-        </div>
-
-        <audio
-          ref={audioRef}
-          src={currentSong.url}
-          onLoadedMetadata={() => setDuration(audioRef.current.duration)}
-          onTimeUpdate={() => setProgress(audioRef.current.currentTime)}
-          onEnded={nextSong}
-        />
-      </section>
-    </main>
+      </main>
+    </>
   )
 }
 
