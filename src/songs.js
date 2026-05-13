@@ -197,4 +197,65 @@
     cover: "/one-sound-emotion/cover.jpg",
     url: "https://github.com/JESSE-MASTER/one-sound-music/releases/download/v1.0/Wi-fi.da.roca.mp3"
   }
+,
+{
+  title: "I Love Loving You",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.1/I.Love.Loving.You.mp3"
+},
+{
+  title: "In Every Sunrise",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.1/In.Every.Sunrise.mp3"
+},
+{
+  title: "Chapado",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.1/Chapado-_1_.mp3"
+},
+{
+  title: "Hexa e Ilusão",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.1/Hexa-e-ilusao.mp3"
+},
+{
+  title: "Fui Algemado",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.1/Fui-algemado-_1_.mp3"
+},
+{
+  title: "Amor Complicado",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.1/Amor-complicado.mp3"
+},
+{
+  title: "Garçom Inteligente",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.1/Garcom-inteligente.mp3"
+},
+{
+  title: "Aleatório",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.1/Aleatorio.mp3"
+},
+{
+  title: "Paixão Avassaladora",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.1/Paixao-Avassaladora.mp3"
+},
+{
+  title: "Golpe do Pix",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.1/Golpe.do.Pix.wav"
+}
 ]
