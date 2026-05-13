@@ -203,12 +203,13 @@ function App() {
           </div>
 
           <audio
-            ref={audioRef}
-            src={currentSong.url}
-            onLoadedMetadata={() => setDuration(audioRef.current.duration)}
-            onTimeUpdate={() => setProgress(audioRef.current.currentTime)}
-            onEnded={nextSong}
-          />
+  	   ref={audioRef}
+  	   src={currentSong.url}
+  	   preload="metadata"
+  	   onLoadedMetadata={() => setDuration(audioRef.current.duration)}
+  	   onTimeUpdate={() => setProgress(audioRef.current.currentTime)}
+  	   onEnded={nextSong}
+         />
         </section>
       </main>
     </>
