@@ -5,11 +5,11 @@
   "homepage": "https://jesse-master.github.io/one-sound-emotion/",
   "type": "module",
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
-},
+    "dev": "vite",
+    "build": "vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
   "dependencies": {
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
@@ -24,6 +24,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "gh-pages": "^6.3.0",
     "globals": "^17.6.0",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "vite-plugin-pwa": "^1.3.0"
   }
 }
