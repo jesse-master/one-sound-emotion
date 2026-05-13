@@ -86,7 +86,7 @@ function App() {
 
   return (
     <>
-      <WavesBackground />
+      {/* <WavesBackground /> */}
 
       <main className="app">
         <section className="hero">
