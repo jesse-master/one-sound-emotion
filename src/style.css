@@ -435,3 +435,96 @@ h1 {
   color: white !important;
   box-shadow: 0 0 18px rgba(0, 184, 148, 0.7);
 }
+
+/* LISTA PREMIUM */
+
+.songs-list-section {
+  margin-top: 40px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 26px;
+  overflow: hidden;
+  backdrop-filter: blur(18px);
+}
+
+.list-header {
+  display: grid;
+  grid-template-columns: 70px 2fr 1.5fr 90px;
+  padding: 18px 24px;
+  background: rgba(255,255,255,.04);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #a8a8a8;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.list-song {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: white;
+  display: grid;
+  grid-template-columns: 70px 2fr 1.5fr 90px;
+  align-items: center;
+  padding: 16px 24px;
+  transition: .22s;
+  cursor: pointer;
+}
+
+.list-song:hover {
+  background: rgba(255,255,255,.06);
+}
+
+.active-list-song {
+  background: rgba(0,184,148,.16);
+}
+
+.list-song-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.list-song-info img {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.list-song-info strong {
+  display: block;
+  font-size: 16px;
+}
+
+.list-song-info p {
+  margin: 4px 0 0;
+  color: #bdbdbd;
+  font-size: 14px;
+}
+
+.playing-indicator {
+  font-size: 20px;
+}
+
+@media (max-width: 900px) {
+  .list-header {
+    display: none;
+  }
+
+  .list-song {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    text-align: left;
+  }
+
+  .list-song > span:first-child,
+  .list-song > span:nth-child(3) {
+    display: none;
+  }
+
+  .playing-indicator {
+    justify-self: end;
+  }
+}

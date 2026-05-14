@@ -123,8 +123,47 @@ function App() {
             )
           })}
         </section>
+<section className="songs-list-section">
+  <div className="list-header">
+    <span>#</span>
+    <span>Música</span>
+    <span>Artista</span>
+    <span>Status</span>
+  </div>
 
-        {showNowPlaying && (
+  {filteredSongs.map((song) => {
+    const realIndex = songs.findIndex(s => s.url === song.url)
+    const isActive = currentSong.url === song.url
+
+    return (
+      <button
+        key={`list-${song.url}`}
+        className={`list-song ${isActive ? 'active-list-song' : ''}`}
+        onClick={() => playSong(realIndex)}
+      >
+        <span>{realIndex + 1}</span>
+
+        <div className="list-song-info">
+          <img src={song.cover} alt={song.title} />
+
+          <div>
+            <strong>{song.title}</strong>
+            <p>{song.artist}</p>
+          </div>
+        </div>
+
+        <span>{song.artist}</span>
+
+        <span className="playing-indicator">
+          {isActive && isPlaying ? '🎵' : '▶'}
+        </span>
+      </button>
+    )
+  })}
+</section>
+
+{showNowPlaying && (
+    
           <section className="now-playing">
             <button className="close-now" onClick={() => setShowNowPlaying(false)}>
               ↓
