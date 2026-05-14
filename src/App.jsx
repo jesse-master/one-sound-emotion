@@ -12,7 +12,8 @@ function App() {
   const [search, setSearch] = useState('')
   const [showSplash, setShowSplash] = useState(true)
   const [showNowPlaying, setShowNowPlaying] = useState(false)
-
+  const [isShuffle, setIsShuffle] = useState(false)
+  const [isLoop, setIsLoop] = useState(false)
   const currentSong = songs[currentIndex]
 
   useEffect(() => {

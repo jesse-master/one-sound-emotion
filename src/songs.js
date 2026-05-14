@@ -257,5 +257,23 @@
   artist: "Jessé Ferreira",
   cover: "/one-sound-emotion/cover.jpg",
   url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.1/Golpe.do.Pix.wav"
+},
+{
+  title: "Eu Supero",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.2/Eu.supero.1.mp3"
+},
+{
+  title: "Quando Te Encontrei",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.2/Quando.te.encontrei.2.mp3"
+},
+{
+  title: "Hora de Voltar",
+  artist: "Jessé Ferreira",
+  cover: "/one-sound-emotion/cover.jpg",
+  url: "https://github.com/jesse-master/one-sound-music/releases/download/v1.2/Hora.de.voltar.mp3"
 }
 ]

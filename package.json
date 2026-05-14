@@ -11,6 +11,9 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@capacitor/android": "^8.3.4",
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
     "@tsparticles/slim": "^3.9.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",

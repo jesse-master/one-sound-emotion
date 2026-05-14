@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">One Sound Emotion</string>
+    <string name="title_activity_main">One Sound Emotion</string>
+    <string name="package_name">com.jessemaster.onesoundemotion</string>
+    <string name="custom_url_scheme">com.jessemaster.onesoundemotion</string>
+</resources>
