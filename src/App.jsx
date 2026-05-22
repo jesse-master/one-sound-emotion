@@ -72,6 +72,41 @@ function App() {
     }
   }, [currentIndex, isPlaying])
 
+useEffect(() => {
+  if ('mediaSession' in navigator && currentSong) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: currentSong.title,
+      artist: currentSong.artist,
+      album: 'One Sound Emotion',
+      artwork: [
+        {
+          src: currentSong.cover,
+          sizes: '512x512',
+          type: 'image/jpeg'
+        }
+      ]
+    })
+
+    navigator.mediaSession.setActionHandler('play', () => {
+      audioRef.current?.play()
+      setIsPlaying(true)
+    })
+
+    navigator.mediaSession.setActionHandler('pause', () => {
+      audioRef.current?.pause()
+      setIsPlaying(false)
+    })
+
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+      prevSong()
+    })
+
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+      nextSong()
+    })
+  }
+}, [currentSong, isPlaying])
+
   if (showSplash) {
     return (
       <section className="splash">
